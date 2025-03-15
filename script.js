@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 async function fetchPosts() {
     try {
         console.log("Fetching posts..."); // إضافة هذا السطر للتحقق
-        const response = await fetch("/get-codes");
+        const response = await fetch("Files/Codes.json"); // قراءة الملف مباشرة
         if (!response.ok) {
             throw new Error("Failed to fetch posts");
         }
@@ -40,16 +40,20 @@ async function fetchPosts() {
 
 // Open video details page
 function openVideoDetails(code) {
-    fetch(`/get-code/${code}`)
+    fetch("Files/Codes.json") // قراءة الملف مباشرة
         .then(response => response.json())
-        .then(data => {
-            document.getElementById("videoTitle").innerText = data.name;
-            document.getElementById("videoThumbnail").src = data.thumbnail;
-            document.getElementById("videoDescription").innerText = data.description;
-            document.getElementById("developer").innerText = `Developer: ${data.developer}`; // عرض Developer
-            document.getElementById("description2").innerText = data.description2; // عرض description2
+        .then(codes => {
+            const foundCode = codes.find(c => c.code === code);
+            if (!foundCode) {
+                throw new Error("Code not found");
+            }
+            document.getElementById("videoTitle").innerText = foundCode.name;
+            document.getElementById("videoThumbnail").src = foundCode.thumbnail;
+            document.getElementById("videoDescription").innerText = foundCode.description;
+            document.getElementById("developer").innerText = `Developer: ${foundCode.developer}`; // عرض Developer
+            document.getElementById("description2").innerText = foundCode.description2; // عرض description2
             const linksList = document.getElementById("videoLinks");
-            linksList.innerHTML = data.links.map(link => `<li><a href="${link}" target="_blank">${link}</a></li>`).join("");
+            linksList.innerHTML = foundCode.links.map(link => `<li><a href="${link}" target="_blank">${link}</a></li>`).join("");
             document.getElementById("postsContainer").style.display = "none";
             document.getElementById("videoDetailsPage").style.display = "block";
         })
