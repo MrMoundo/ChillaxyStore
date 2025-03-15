@@ -1,3 +1,47 @@
+let lastModifiedCodes = null;
+let lastModifiedData = null;
+
+// التحقق من التحديثات كل 5 ثوانٍ
+setInterval(checkForUpdates, 5000);
+
+async function checkForUpdates() {
+    try {
+        document.getElementById("loading").style.display = "block"; // إظهار رسالة التحميل
+        // التحقق من تحديثات Codes.json
+        const codesResponse = await fetch("Files/Codes.json");
+        if (!codesResponse.ok) {
+            throw new Error("Failed to fetch Codes.json");
+        }
+        const codesLastModified = new Date(codesResponse.headers.get("Last-Modified"));
+        if (!lastModifiedCodes || codesLastModified > lastModifiedCodes) {
+            lastModifiedCodes = codesLastModified;
+            fetchPosts();
+            playNotificationSound(); // تشغيل صوت عند التحديث
+        }
+
+        // التحقق من تحديثات data.json
+        const dataResponse = await fetch("data.json");
+        if (!dataResponse.ok) {
+            throw new Error("Failed to fetch data.json");
+        }
+        const dataLastModified = new Date(dataResponse.headers.get("Last-Modified"));
+        if (!lastModifiedData || dataLastModified > lastModifiedData) {
+            lastModifiedData = dataLastModified;
+            fetchFooterData();
+            playNotificationSound(); // تشغيل صوت عند التحديث
+        }
+    } catch (error) {
+        console.error("Error checking for updates:", error);
+    } finally {
+        document.getElementById("loading").style.display = "none"; // إخفاء رسالة التحميل
+    }
+}
+
+function playNotificationSound() {
+    const audio = new Audio("notification.mp3"); // تأكد من وجود ملف الصوت في مجلد المشروع
+    audio.play();
+}
+
 // Fetch and display posts
 document.addEventListener("DOMContentLoaded", function () {
     fetchPosts();
@@ -91,11 +135,13 @@ function searchPosts() {
 // Fetch and display footer data from data.json
 async function fetchFooterData() {
     try {
+        console.log("Fetching footer data..."); // إضافة هذا السطر للتحقق
         const response = await fetch("data.json");
         if (!response.ok) {
             throw new Error("Failed to fetch data.json");
         }
         const data = await response.json();
+        console.log("Footer data fetched successfully:", data); // إضافة هذا السطر للتحقق
 
         // عرض روابط About
         const aboutLinks = document.getElementById("aboutLinks");
