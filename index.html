@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chillaxy Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e2e;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(135deg, #b00020, #6a11cb);
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            position: relative;
+        }
+        .store-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .search-container {
+            margin: 15px auto;
+            max-width: 400px;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+        .posts-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .post {
+            background: #2a2a3b;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px;
+            width: 250px;
+            box-shadow: 0 4px 10px rgba(255, 0, 0, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+        .post:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(255, 0, 0, 0.8);
+        }
+        .get-btn {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .get-btn:hover {
+            background: linear-gradient(135deg, #ff4b2b, #ff416c);
+        }
+        .no-results {
+            display: none;
+            color: red;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        #videoDetailsPage {
+            display: none;
+            padding: 20px;
+            text-align: center;
+        }
+        #videoDetailsPage img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+        #videoDetailsPage button {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: #1e1e2e;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #b00020;
+            margin-top: 40px;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .footer-section {
+            margin: 10px;
+            text-align: left;
+        }
+        .footer-section h3 {
+            color: #ff416c;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .footer-section a {
+            color: #ff4b2b;
+            text-decoration: none;
+            display: block;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .footer-section a:hover {
+            color: #ff416c;
+        }
+        .footer-section p {
+            color: #ff4b2b;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        .social-links a {
+            color: #ff4b2b;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 16px;
+        }
+        .social-links a:hover {
+            color: #ff416c;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .post {
+                width: 100%;
+                margin: 10px 0;
+            }
+            .search-container {
+                max-width: 90%;
+            }
+            header {
+                font-size: 20px;
+            }
+            .store-title {
+                font-size: 28px;
+            }
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+            }
+            .footer-section {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="store-title">Chillaxy Store</div>
+        Last Added Posts
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search posts..." onkeyup="searchPosts()">
+        </div>
+    </header>
+    
+    <section class="posts-container" id="postsContainer">
+        <!-- Posts will be loaded here dynamically -->
+    </section>
+    
+    <p id="noResults" class="no-results">No results found.</p>
+
+    <!-- Video Details Page -->
+    <div id="videoDetailsPage">
+        <h2 id="videoTitle"></h2>
+        <img id="videoThumbnail" src="" alt="Video Thumbnail">
+        <p id="videoDescription"></p>
+        <p id="developer"></p> <!-- Developer -->
+        <p id="description2"></p> <!-- description2 -->
+        <h3>Links:</h3>
+        <ul id="videoLinks"></ul>
+        <button onclick="goBack()">Go Back</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About</h3>
+                <div id="aboutLinks"></div>
+            </div>
+            <div class="footer-section">
+                <h3>Terms</h3>
+                <div id="termsLinks"></div>
+            </div>
+            <div class="footer-section">
+                <h3>Socials</h3>
+                <div id="socialsLinks"></div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

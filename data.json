@@ -1,0 +1,19 @@
+{
+    "about": [
+        { "name": "About Us", "link": "#" },
+        { "name": "FAQ", "link": "#" },
+        { "name": "Careers", "link": "#" }
+    ],
+    "terms": [
+        { "name": "Privacy Shield", "link": "#" },
+        { "name": "Privacy Policy", "link": "#" },
+        { "name": "Terms of Service", "link": "#" }
+    ],
+    "socials": [
+        { "name": "Discord", "link": "https://discord.gg/TVPmfTdKQ9" },
+        { "name": "Twitter", "link": "https://twitter.com" },
+        { "name": "YouTube", "link": "https://youtube.com" },
+        { "name": "Instagram", "link": "https://instagram.com" },
+        { "name": "Facebook", "link": "https://facebook.com" }
+    ]
+}
