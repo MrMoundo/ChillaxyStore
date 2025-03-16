@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function fetchPosts() {
     try {
-        document.getElementById("loading").style.display = "block"; // إظهار رسالة التحميل
         const response = await fetch("Files/Codes.json");
         if (!response.ok) {
             throw new Error("Failed to fetch posts");
@@ -66,8 +65,6 @@ async function fetchPosts() {
     } catch (error) {
         console.error("Error fetching posts:", error);
         document.getElementById("noResults").style.display = "block"; // إظهار رسالة "No results found" في حالة الخطأ
-    } finally {
-        document.getElementById("loading").style.display = "none"; // إخفاء رسالة التحميل
     }
 }
 
@@ -82,9 +79,9 @@ function openVideoDetails(code) {
             }
             document.getElementById("videoTitle").innerText = foundCode.name;
             document.getElementById("videoThumbnail").src = getYouTubeThumbnail(foundCode.videoLink); // عرض الصورة المصغرة
-            document.getElementById("videoDescription").innerHTML = formatText(foundCode.description); // تطبيق التنسيقات على الوصف
-            document.getElementById("developer").innerHTML = `Developer: ${formatText(foundCode.developer)}`; // تطبيق التنسيقات على Developer
-            document.getElementById("description2").innerHTML = formatText(foundCode.description2); // تطبيق التنسيقات على description2
+            document.getElementById("videoDescription").innerText = formatText(foundCode.description); // تطبيق التنسيقات على الوصف
+            document.getElementById("developer").innerText = `Developer: ${foundCode.developer}`; // عرض Developer
+            document.getElementById("description2").innerText = formatText(foundCode.description2); // تطبيق التنسيقات على description2
 
             // عرض روابط التحميل
             const linksList = document.getElementById("videoLinks");
