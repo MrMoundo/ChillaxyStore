@@ -18,6 +18,12 @@ function formatText(text) {
     return text;
 }
 
+// دالة لاستخراج video-id من رابط YouTube
+function getYouTubeThumbnail(videoLink) {
+    const videoId = videoLink.split("v=")[1]; // استخراج video-id
+    return `https://img.youtube.com/vi/${videoId}/0.jpg`; // إنشاء رابط الصورة المصغرة
+}
+
 // Fetch and display posts
 document.addEventListener("DOMContentLoaded", function () {
     fetchPosts();
@@ -35,10 +41,11 @@ async function fetchPosts() {
         postsContainer.innerHTML = ""; // Clear existing posts
 
         codes.forEach(code => {
+            const thumbnail = getYouTubeThumbnail(code.videoLink); // إنشاء رابط الصورة المصغرة
             const post = document.createElement("div");
             post.className = "post";
             post.innerHTML = `
-                <img src="${code.thumbnail}" alt="Post Image" style="width:100%; border-radius: 10px;">
+                <img src="${thumbnail}" alt="Post Image" style="width:100%; border-radius: 10px;">
                 <h3>${formatText(code.name)}</h3>
                 <p>${formatText(code.description)}</p>
                 <button class="get-btn" onclick="openVideoDetails('${code.code}')">🔽 Get</button>
@@ -61,12 +68,20 @@ function openVideoDetails(code) {
                 throw new Error("Code not found");
             }
             document.getElementById("videoTitle").innerText = foundCode.name;
-            document.getElementById("videoThumbnail").src = foundCode.thumbnail;
+            document.getElementById("videoThumbnail").src = getYouTubeThumbnail(foundCode.videoLink); // عرض الصورة المصغرة
             document.getElementById("videoDescription").innerText = foundCode.description;
             document.getElementById("developer").innerText = `Developer: ${foundCode.developer}`; // عرض Developer
             document.getElementById("description2").innerText = foundCode.description2; // عرض description2
+
+            // عرض روابط التحميل
             const linksList = document.getElementById("videoLinks");
             linksList.innerHTML = foundCode.links.map(link => `<li><a href="${link}" target="_blank" style="color: #ff4b2b; text-decoration: underline;">${link}</a></li>`).join("");
+
+            // تشغيل الفيديو
+            const videoPlayer = document.getElementById("videoPlayer");
+            const videoId = foundCode.videoLink.split("v=")[1]; // استخراج video-id
+            videoPlayer.src = `https://www.youtube.com/embed/${videoId}`; // تعيين رابط الفيديو
+
             document.getElementById("postsContainer").style.display = "none";
             document.getElementById("videoDetailsPage").style.display = "block";
         })
