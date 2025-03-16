@@ -15,6 +15,9 @@ function formatText(text) {
     // تحويل *كلمة* إلى <em>كلمة</em> (مائل)
     text = text.replace(/\*(.*?)\*/g, "<em>$1</em>");
 
+    // تحويل [النص](الرابط) إلى <a href="الرابط">النص</a>
+    text = text.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" style="color: #ff4b2b; text-decoration: underline;">$1</a>');
+
     return text;
 }
 
@@ -22,6 +25,13 @@ function formatText(text) {
 function getYouTubeThumbnail(videoLink) {
     const videoId = videoLink.split("v=")[1]; // استخراج video-id
     return `https://img.youtube.com/vi/${videoId}/0.jpg`; // إنشاء رابط الصورة المصغرة
+}
+
+// تشغيل الفيديو عند الضغط على الصورة المصغرة
+function playVideo() {
+    const videoPlayer = document.getElementById("videoPlayer");
+    videoPlayer.style.display = "block"; // إظهار الفيديو
+    videoPlayer.src += "?autoplay=1"; // تشغيل الفيديو تلقائيًا
 }
 
 // Fetch and display posts
@@ -69,18 +79,19 @@ function openVideoDetails(code) {
             }
             document.getElementById("videoTitle").innerText = foundCode.name;
             document.getElementById("videoThumbnail").src = getYouTubeThumbnail(foundCode.videoLink); // عرض الصورة المصغرة
-            document.getElementById("videoDescription").innerText = foundCode.description;
+            document.getElementById("videoDescription").innerText = formatText(foundCode.description); // تطبيق التنسيقات على الوصف
             document.getElementById("developer").innerText = `Developer: ${foundCode.developer}`; // عرض Developer
-            document.getElementById("description2").innerText = foundCode.description2; // عرض description2
+            document.getElementById("description2").innerText = formatText(foundCode.description2); // تطبيق التنسيقات على description2
 
             // عرض روابط التحميل
             const linksList = document.getElementById("videoLinks");
             linksList.innerHTML = foundCode.links.map(link => `<li><a href="${link}" target="_blank" style="color: #ff4b2b; text-decoration: underline;">${link}</a></li>`).join("");
 
-            // تشغيل الفيديو
+            // تعيين رابط الفيديو
             const videoPlayer = document.getElementById("videoPlayer");
             const videoId = foundCode.videoLink.split("v=")[1]; // استخراج video-id
             videoPlayer.src = `https://www.youtube.com/embed/${videoId}`; // تعيين رابط الفيديو
+            videoPlayer.style.display = "none"; // إخفاء الفيديو في البداية
 
             document.getElementById("postsContainer").style.display = "none";
             document.getElementById("videoDetailsPage").style.display = "block";
