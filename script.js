@@ -1,45 +1,21 @@
-let lastModifiedCodes = null;
-let lastModifiedData = null;
+// دالة لتحويل العلامات إلى تنسيقات HTML
+function formatText(text) {
+    // تحويل **كلمة** إلى <strong>كلمة</strong>
+    text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
 
-// التحقق من التحديثات كل 5 ثوانٍ
-setInterval(checkForUpdates, 5000);
+    // تحويل ```كلمة``` إلى <code>كلمة</code>
+    text = text.replace(/```(.*?)```/g, "<code>$1</code>");
 
-async function checkForUpdates() {
-    try {
-        document.getElementById("loading").style.display = "block"; // إظهار رسالة التحميل
-        // التحقق من تحديثات Codes.json
-        const codesResponse = await fetch("Files/Codes.json");
-        if (!codesResponse.ok) {
-            throw new Error("Failed to fetch Codes.json");
-        }
-        const codesLastModified = new Date(codesResponse.headers.get("Last-Modified"));
-        if (!lastModifiedCodes || codesLastModified > lastModifiedCodes) {
-            lastModifiedCodes = codesLastModified;
-            fetchPosts();
-            playNotificationSound(); // تشغيل صوت عند التحديث
-        }
+    // تحويل __كلمة__ إلى <u>كلمة</u> (تحت الخط)
+    text = text.replace(/__(.*?)__/g, "<u>$1</u>");
 
-        // التحقق من تحديثات data.json
-        const dataResponse = await fetch("data.json");
-        if (!dataResponse.ok) {
-            throw new Error("Failed to fetch data.json");
-        }
-        const dataLastModified = new Date(dataResponse.headers.get("Last-Modified"));
-        if (!lastModifiedData || dataLastModified > lastModifiedData) {
-            lastModifiedData = dataLastModified;
-            fetchFooterData();
-            playNotificationSound(); // تشغيل صوت عند التحديث
-        }
-    } catch (error) {
-        console.error("Error checking for updates:", error);
-    } finally {
-        document.getElementById("loading").style.display = "none"; // إخفاء رسالة التحميل
-    }
-}
+    // تحويل ~~كلمة~~ إلى <del>كلمة</del> (نص مشطوب)
+    text = text.replace(/~~(.*?)~~/g, "<del>$1</del>");
 
-function playNotificationSound() {
-    const audio = new Audio("notification.mp3"); // تأكد من وجود ملف الصوت في مجلد المشروع
-    audio.play();
+    // تحويل *كلمة* إلى <em>كلمة</em> (مائل)
+    text = text.replace(/\*(.*?)\*/g, "<em>$1</em>");
+
+    return text;
 }
 
 // Fetch and display posts
@@ -50,28 +26,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function fetchPosts() {
     try {
-        console.log("Fetching posts..."); // إضافة هذا السطر للتحقق
-        const response = await fetch("Files/Codes.json"); // قراءة الملف مباشرة
+        const response = await fetch("Files/Codes.json");
         if (!response.ok) {
             throw new Error("Failed to fetch posts");
         }
         const codes = await response.json();
-        console.log("Posts fetched successfully:", codes); // إضافة هذا السطر للتحقق
         const postsContainer = document.getElementById("postsContainer");
         postsContainer.innerHTML = ""; // Clear existing posts
-
-        if (codes.length === 0) {
-            document.getElementById("noResults").style.display = "block"; // إظهار رسالة "No results found"
-            return;
-        }
 
         codes.forEach(code => {
             const post = document.createElement("div");
             post.className = "post";
             post.innerHTML = `
                 <img src="${code.thumbnail}" alt="Post Image" style="width:100%; border-radius: 10px;">
-                <h3>${code.name}</h3>
-                <p>${code.description}</p>
+                <h3>${formatText(code.name)}</h3>
+                <p>${formatText(code.description)}</p>
                 <button class="get-btn" onclick="openVideoDetails('${code.code}')">🔽 Get</button>
             `;
             postsContainer.appendChild(post);
@@ -97,7 +66,7 @@ function openVideoDetails(code) {
             document.getElementById("developer").innerText = `Developer: ${foundCode.developer}`; // عرض Developer
             document.getElementById("description2").innerText = foundCode.description2; // عرض description2
             const linksList = document.getElementById("videoLinks");
-            linksList.innerHTML = foundCode.links.map(link => `<li><a href="${link}" target="_blank">${link}</a></li>`).join("");
+            linksList.innerHTML = foundCode.links.map(link => `<li><a href="${link}" target="_blank" style="color: #ff4b2b; text-decoration: underline;">${link}</a></li>`).join("");
             document.getElementById("postsContainer").style.display = "none";
             document.getElementById("videoDetailsPage").style.display = "block";
         })
@@ -135,25 +104,23 @@ function searchPosts() {
 // Fetch and display footer data from data.json
 async function fetchFooterData() {
     try {
-        console.log("Fetching footer data..."); // إضافة هذا السطر للتحقق
         const response = await fetch("data.json");
         if (!response.ok) {
             throw new Error("Failed to fetch data.json");
         }
         const data = await response.json();
-        console.log("Footer data fetched successfully:", data); // إضافة هذا السطر للتحقق
 
         // عرض روابط About
         const aboutLinks = document.getElementById("aboutLinks");
-        aboutLinks.innerHTML = data.about.map(link => `<a href="${link.link}" target="_blank">${link.name}</a>`).join("");
+        aboutLinks.innerHTML = data.about.map(link => `<a href="${link.link}" target="_blank" style="color: #ff4b2b; text-decoration: underline;">${formatText(link.name)}</a>`).join("");
 
         // عرض روابط Terms
         const termsLinks = document.getElementById("termsLinks");
-        termsLinks.innerHTML = data.terms.map(link => `<a href="${link.link}" target="_blank">${link.name}</a>`).join("");
+        termsLinks.innerHTML = data.terms.map(link => `<a href="${link.link}" target="_blank" style="color: #ff4b2b; text-decoration: underline;">${formatText(link.name)}</a>`).join("");
 
         // عرض روابط Socials
         const socialsLinks = document.getElementById("socialsLinks");
-        socialsLinks.innerHTML = data.socials.map(link => `<a href="${link.link}" target="_blank">${link.name}</a>`).join("");
+        socialsLinks.innerHTML = data.socials.map(link => `<a href="${link.link}" target="_blank" style="color: #ff4b2b; text-decoration: underline;">${formatText(link.name)}</a>`).join("");
     } catch (error) {
         console.error("Error fetching footer data:", error);
     }
