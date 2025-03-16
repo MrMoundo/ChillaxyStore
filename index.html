@@ -90,6 +90,7 @@
             width: 100%;
             max-width: 600px;
             border-radius: 10px;
+            cursor: pointer;
         }
         #videoDetailsPage button {
             background: linear-gradient(135deg, #ff416c, #ff4b2b);
@@ -108,6 +109,7 @@
             border: none;
             border-radius: 10px;
             margin-top: 20px;
+            display: none; /* إخفاء الفيديو في البداية */
         }
 
         /* Footer Styles */
@@ -228,7 +230,7 @@
     <!-- Video Details Page -->
     <div id="videoDetailsPage">
         <h2 id="videoTitle"></h2>
-        <img id="videoThumbnail" src="" alt="Video Thumbnail">
+        <img id="videoThumbnail" src="" alt="Video Thumbnail" onclick="playVideo()" style="cursor: pointer;">
         <p id="videoDescription"></p>
         <p id="developer"></p> <!-- Developer -->
         <p id="description2"></p> <!-- description2 -->
