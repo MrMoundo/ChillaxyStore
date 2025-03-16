@@ -101,6 +101,14 @@
             font-size: 16px;
             margin-top: 20px;
         }
+        #videoPlayer {
+            width: 100%;
+            max-width: 560px;
+            height: 315px;
+            border: none;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
 
         /* Footer Styles */
         footer {
@@ -126,7 +134,7 @@
         }
         .footer-section a {
             color: #ff4b2b;
-            text-decoration: underline; /* إضافة تحت الخط للروابط */
+            text-decoration: underline;
             display: block;
             margin: 5px 0;
             font-size: 14px;
@@ -141,7 +149,7 @@
         }
         .social-links a {
             color: #ff4b2b;
-            text-decoration: underline; /* إضافة تحت الخط للروابط */
+            text-decoration: underline;
             margin: 0 10px;
             font-size: 16px;
         }
@@ -152,26 +160,26 @@
         /* تنسيقات النصوص المميزة */
         strong {
             font-weight: bold;
-            color: #ff4b2b; /* لون موحد للنص العريض */
+            color: #ff4b2b;
         }
         code {
             font-family: "Courier New", monospace;
             background-color: #2a2a3b;
             padding: 2px 5px;
             border-radius: 3px;
-            color: #ff4b2b; /* لون موحد للنص البرمجي */
+            color: #ff4b2b;
         }
         u {
             text-decoration: underline;
-            color: #ff4b2b; /* لون موحد للنص تحت الخط */
+            color: #ff4b2b;
         }
         del {
             text-decoration: line-through;
-            color: #ff4b2b; /* لون موحد للنص المشطوب */
+            color: #ff4b2b;
         }
         em {
             font-style: italic;
-            color: #ff4b2b; /* لون موحد للنص المائل */
+            color: #ff4b2b;
         }
 
         /* Responsive Design */
@@ -195,6 +203,9 @@
             }
             .footer-section {
                 text-align: center;
+            }
+            #videoPlayer {
+                height: 200px;
             }
         }
     </style>
@@ -223,6 +234,7 @@
         <p id="description2"></p> <!-- description2 -->
         <h3>Links:</h3>
         <ul id="videoLinks"></ul>
+        <iframe id="videoPlayer" width="560" height="315" frameborder="0" allowfullscreen></iframe> <!-- إضافة iframe -->
         <button onclick="goBack()">Go Back</button>
     </div>
 
