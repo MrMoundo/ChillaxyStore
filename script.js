@@ -3,8 +3,8 @@ function formatText(text) {
     // تحويل **كلمة** إلى <strong>كلمة</strong>
     text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
 
-    // تحويل ```كلمة``` إلى <code>كلمة</code>
-    text = text.replace(/```(.*?)```/g, "<code>$1</code>");
+    // تحويل `كلمة` إلى <code>كلمة</code>
+    text = text.replace(/`(.*?)`/g, "<code>$1</code>");
 
     // تحويل __كلمة__ إلى <u>كلمة</u> (تحت الخط)
     text = text.replace(/__(.*?)__/g, "<u>$1</u>");
