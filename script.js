@@ -29,9 +29,27 @@ function getYouTubeThumbnail(videoLink) {
 
 // تشغيل الفيديو عند الضغط على الصورة المصغرة
 function playVideo() {
+    const videoThumbnail = document.getElementById("videoThumbnail");
     const videoPlayer = document.getElementById("videoPlayer");
+
+    videoThumbnail.style.display = "none"; // إخفاء الصورة
     videoPlayer.style.display = "block"; // إظهار الفيديو
     videoPlayer.src += "?autoplay=1"; // تشغيل الفيديو تلقائيًا
+}
+
+// العودة إلى الصورة عند الضغط على زر Go Back
+function goBack() {
+    const videoThumbnail = document.getElementById("videoThumbnail");
+    const videoPlayer = document.getElementById("videoPlayer");
+
+    videoPlayer.style.display = "none"; // إخفاء الفيديو
+    videoThumbnail.style.display = "block"; // إظهار الصورة
+    videoPlayer.src = videoPlayer.src.split("?")[0]; // إيقاف الفيديو
+
+    document.getElementById("postsContainer").style.display = "flex"; // إعادة عرض القائمة
+    document.getElementById("videoDetailsPage").style.display = "none"; // إخفاء صفحة التفاصيل
+    document.getElementById("postsContainer").style.justifyContent = "center"; // إعادة المحاذاة إلى الوسط
+    fetchPosts(); // Refresh posts
 }
 
 // Fetch and display posts
@@ -102,14 +120,6 @@ function openVideoDetails(code) {
         });
 }
 
-// Go back to posts
-function goBack() {
-    document.getElementById("postsContainer").style.display = "flex"; // تغيير إلى flex لإصلاح المحاذاة
-    document.getElementById("videoDetailsPage").style.display = "none";
-    document.getElementById("postsContainer").style.justifyContent = "center"; // إعادة المحاذاة إلى الوسط
-    fetchPosts(); // Refresh posts
-}
-
 // Search posts
 function searchPosts() {
     let input = document.getElementById("searchInput").value.toLowerCase();
@@ -138,15 +148,27 @@ async function fetchFooterData() {
 
         // عرض روابط About
         const aboutLinks = document.getElementById("aboutLinks");
-        aboutLinks.innerHTML = data.about.map(link => `<a href="${link.link}" target="_blank" style="color: #ff4b2b; text-decoration: underline;">${formatText(link.name)}</a>`).join("");
+        aboutLinks.innerHTML = data.about.map(link => `
+            <div class="footer-card">
+                <h3>${link.name}</h3>
+                <p>${link.description}</p>
+            </div>
+        `).join("");
 
         // عرض روابط Terms
         const termsLinks = document.getElementById("termsLinks");
-        termsLinks.innerHTML = data.terms.map(link => `<a href="${link.link}" target="_blank" style="color: #ff4b2b; text-decoration: underline;">${formatText(link.name)}</a>`).join("");
+        termsLinks.innerHTML = data.terms.map(link => `
+            <div class="footer-card">
+                <h3>${link.name}</h3>
+                <p>${link.description}</p>
+            </div>
+        `).join("");
 
         // عرض روابط Socials
         const socialsLinks = document.getElementById("socialsLinks");
-        socialsLinks.innerHTML = data.socials.map(link => `<a href="${link.link}" target="_blank" style="color: #ff4b2b; text-decoration: underline;">${formatText(link.name)}</a>`).join("");
+        socialsLinks.innerHTML = data.socials.map(link => `
+            <a href="${link.link}" target="_blank" class="social-link">${link.name}</a>
+        `).join("");
     } catch (error) {
         console.error("Error fetching footer data:", error);
     }
