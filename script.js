@@ -1,5 +1,7 @@
 // دالة لتحويل العلامات إلى تنسيقات HTML
 function formatText(text) {
+    if (!text) return ''; // إذا كان النص فارغًا، نعود بسلسلة فارغة
+
     // تحويل **كلمة** إلى <strong>كلمة</strong>
     text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
 
@@ -95,11 +97,11 @@ function openVideoDetails(code) {
             if (!foundCode) {
                 throw new Error("Code not found");
             }
-            document.getElementById("videoTitle").innerText = foundCode.name;
+            document.getElementById("videoTitle").innerHTML = formatText(foundCode.name); // تطبيق التنسيقات على العنوان
             document.getElementById("videoThumbnail").src = getYouTubeThumbnail(foundCode.videoLink); // عرض الصورة المصغرة
-            document.getElementById("videoDescription").innerText = formatText(foundCode.description); // تطبيق التنسيقات على الوصف
-            document.getElementById("developer").innerText = `Developer: ${foundCode.developer}`; // عرض Developer
-            document.getElementById("description2").innerText = formatText(foundCode.description2); // تطبيق التنسيقات على description2
+            document.getElementById("videoDescription").innerHTML = formatText(foundCode.description); // تطبيق التنسيقات على الوصف
+            document.getElementById("developer").innerHTML = formatText(`Developer: ${foundCode.developer}`); // تطبيق التنسيقات على Developer
+            document.getElementById("description2").innerHTML = formatText(foundCode.description2); // تطبيق التنسيقات على description2
 
             // عرض روابط التحميل
             const linksList = document.getElementById("videoLinks");
@@ -165,8 +167,8 @@ async function fetchFooterData() {
         const aboutLinks = document.getElementById("aboutLinks");
         aboutLinks.innerHTML = data.about.map(link => `
             <div class="footer-card" onclick="window.open('${link.link}', '_blank')">
-                <h3>${link.name}</h3>
-                <p>${link.description}</p>
+                <h3>${formatText(link.name)}</h3>
+                <p>${formatText(link.description)}</p>
             </div>
         `).join("");
 
@@ -174,15 +176,15 @@ async function fetchFooterData() {
         const termsLinks = document.getElementById("termsLinks");
         termsLinks.innerHTML = data.terms.map(link => `
             <div class="footer-card" onclick="window.open('${link.link}', '_blank')">
-                <h3>${link.name}</h3>
-                <p>${link.description}</p>
+                <h3>${formatText(link.name)}</h3>
+                <p>${formatText(link.description)}</p>
             </div>
         `).join("");
 
         // عرض روابط Socials
         const socialsLinks = document.getElementById("socialsLinks");
         socialsLinks.innerHTML = data.socials.map(link => `
-            <a href="${link.link}" target="_blank" class="social-link">${link.name}</a>
+            <a href="${link.link}" target="_blank" class="social-link">${formatText(link.name)}</a>
         `).join("");
     } catch (error) {
         console.error("Error fetching footer data:", error);
