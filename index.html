@@ -170,6 +170,39 @@
             color: #ff416c;
         }
 
+        /* تنسيقات النافذة المنبثقة */
+        #popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        #popupContent {
+            background: #2a2a3b;
+            padding: 20px;
+            border-radius: 10px;
+            width: 50%;
+            max-width: 600px;
+            box-shadow: 0 4px 10px rgba(255, 0, 0, 0.5);
+            animation: fadeInUp 0.5s ease-in-out;
+        }
+        #popupContent h3 {
+            color: #ff4b2b;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        #popupContent p {
+            color: #fff;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
         /* Animations */
         @keyframes fadeInUp {
             from {
@@ -180,9 +213,6 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-        .footer-card {
-            animation: fadeInUp 0.5s ease-in-out;
         }
     </style>
 </head>
@@ -231,5 +261,10 @@
             </div>
         </div>
     </footer>
+
+    <!-- النافذة المنبثقة -->
+    <div id="popup">
+        <div id="popupContent"></div>
+    </div>
 </body>
 </html>
