@@ -187,7 +187,9 @@ async function fetchFooterData() {
         // عرض روابط Socials
         const socialsLinks = document.getElementById("socialsLinks");
         socialsLinks.innerHTML = data.socials.map(link => `
-            <a href="${link.link}" target="_blank" class="social-link">${formatText(link.name)}</a>
+            <div class="social-card" onclick="window.open('${link.link}', '_blank')">
+                <h3>${formatText(link.name)}</h3>
+            </div>
         `).join("");
     } catch (error) {
         console.error("Error fetching footer data:", error);
