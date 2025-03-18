@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <script defer src="script.js"></script>
     <style>
+        /* تنسيقات عامة */
         body {
             font-family: Arial, sans-serif;
             background-color: #1e1e2e;
@@ -104,7 +105,7 @@
         }
         #videoPlayer {
             width: 100%;
-            max-width: 560px;
+            max-width: 600px;
             height: 315px;
             border: none;
             border-radius: 10px;
@@ -112,7 +113,7 @@
             display: none; /* إخفاء الفيديو في البداية */
         }
 
-        /* Footer Styles */
+        /* تنسيقات الفوتر */
         footer {
             background: #1e1e2e;
             padding: 20px;
@@ -128,88 +129,59 @@
         .footer-section {
             margin: 10px;
             text-align: left;
+            max-width: 300px;
         }
         .footer-section h3 {
             color: #ff4b2b;
             font-size: 18px;
             margin-bottom: 10px;
         }
-        .footer-section a {
-            color: #ff4b2b;
-            text-decoration: underline;
-            display: block;
-            margin: 5px 0;
+        .footer-card {
+            background: #2a2a3b;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 4px 10px rgba(255, 0, 0, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .footer-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(255, 0, 0, 0.8);
+        }
+        .footer-card p {
+            color: #fff;
             font-size: 14px;
+            line-height: 1.5;
         }
-        .footer-section a:hover {
-            color: #ff416c;
+        .social-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
         }
-        .footer-section p {
+        .social-link {
             color: #ff4b2b;
-            font-size: 14px;
-            margin: 5px 0;
-        }
-        .social-links a {
-            color: #ff4b2b;
-            text-decoration: underline;
-            margin: 0 10px;
+            text-decoration: none;
+            margin: 10px;
             font-size: 16px;
+            transition: color 0.3s;
         }
-        .social-links a:hover {
+        .social-link:hover {
             color: #ff416c;
         }
 
-        /* تنسيقات النصوص المميزة */
-        strong {
-            font-weight: bold;
-            color: #ff4b2b;
-            font-size: 1.2em; /* زيادة حجم الخط */
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        code {
-            font-family: "Courier New", monospace;
-            background-color: #2a2a3b;
-            padding: 2px 5px;
-            border-radius: 3px;
-            color: #ff4b2b;
-        }
-        u {
-            text-decoration: underline;
-            color: #ff4b2b;
-        }
-        del {
-            text-decoration: line-through;
-            color: #ff4b2b;
-        }
-        em {
-            font-style: italic;
-            color: #ff4b2b;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .post {
-                width: 100%;
-                margin: 10px 0;
-            }
-            .search-container {
-                max-width: 90%;
-            }
-            header {
-                font-size: 20px;
-            }
-            .store-title {
-                font-size: 28px;
-            }
-            .footer-content {
-                flex-direction: column;
-                align-items: center;
-            }
-            .footer-section {
-                text-align: center;
-            }
-            #videoPlayer {
-                height: 200px;
-            }
+        .footer-card {
+            animation: fadeInUp 0.5s ease-in-out;
         }
     </style>
 </head>
@@ -232,12 +204,12 @@
     <div id="videoDetailsPage">
         <h2 id="videoTitle"></h2>
         <img id="videoThumbnail" src="" alt="Video Thumbnail" onclick="playVideo()" style="cursor: pointer;">
+        <iframe id="videoPlayer" width="560" height="315" frameborder="0" allowfullscreen></iframe>
         <p id="videoDescription"></p>
         <p id="developer"></p> <!-- Developer -->
         <p id="description2"></p> <!-- description2 -->
         <h3>Links:</h3>
         <ul id="videoLinks"></ul>
-        <iframe id="videoPlayer" width="560" height="315" frameborder="0" allowfullscreen></iframe> <!-- إضافة iframe -->
         <button onclick="goBack()">Go Back</button>
     </div>
 
@@ -254,7 +226,7 @@
             </div>
             <div class="footer-section">
                 <h3>Socials</h3>
-                <div id="socialsLinks"></div>
+                <div class="social-links" id="socialsLinks"></div>
             </div>
         </div>
     </footer>
