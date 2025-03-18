@@ -164,18 +164,18 @@ async function fetchFooterData() {
         // عرض روابط About
         const aboutLinks = document.getElementById("aboutLinks");
         aboutLinks.innerHTML = data.about.map(link => `
-            <div class="footer-card" onclick="openPopup('<h3>${link.name}</h3><p>${link.description}</p>')">
+            <div class="footer-card" onclick="window.open('${link.link}', '_blank')">
                 <h3>${link.name}</h3>
-                <p>${link.description.substring(0, 100)}...</p> <!-- عرض جزء من الوصف -->
+                <p>${link.description}</p>
             </div>
         `).join("");
 
         // عرض روابط Terms
         const termsLinks = document.getElementById("termsLinks");
         termsLinks.innerHTML = data.terms.map(link => `
-            <div class="footer-card" onclick="openPopup('<h3>${link.name}</h3><p>${link.description}</p>')">
+            <div class="footer-card" onclick="window.open('${link.link}', '_blank')">
                 <h3>${link.name}</h3>
-                <p>${link.description.substring(0, 100)}...</p> <!-- عرض جزء من الوصف -->
+                <p>${link.description}</p>
             </div>
         `).join("");
 
