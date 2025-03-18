@@ -137,6 +137,21 @@ function searchPosts() {
     noResults.style.display = found ? "none" : "block";
 }
 
+// دالة لفتح القائمة التفاعلية
+function openPopup(content) {
+    const popup = document.getElementById("popup");
+    const popupContent = document.getElementById("popupContent");
+
+    popupContent.innerHTML = content; // تعيين المحتوى
+    popup.style.display = "flex"; // إظهار النافذة المنبثقة
+}
+
+// دالة لإغلاق القائمة التفاعلية
+function closePopup() {
+    const popup = document.getElementById("popup");
+    popup.style.display = "none"; // إخفاء النافذة المنبثقة
+}
+
 // Fetch and display footer data from data.json
 async function fetchFooterData() {
     try {
@@ -149,18 +164,18 @@ async function fetchFooterData() {
         // عرض روابط About
         const aboutLinks = document.getElementById("aboutLinks");
         aboutLinks.innerHTML = data.about.map(link => `
-            <div class="footer-card" onclick="window.open('${link.link}', '_blank')">
+            <div class="footer-card" onclick="openPopup('<h3>${link.name}</h3><p>${link.description}</p>')">
                 <h3>${link.name}</h3>
-                <p>${link.description}</p>
+                <p>${link.description.substring(0, 100)}...</p> <!-- عرض جزء من الوصف -->
             </div>
         `).join("");
 
         // عرض روابط Terms
         const termsLinks = document.getElementById("termsLinks");
         termsLinks.innerHTML = data.terms.map(link => `
-            <div class="footer-card" onclick="window.open('${link.link}', '_blank')">
+            <div class="footer-card" onclick="openPopup('<h3>${link.name}</h3><p>${link.description}</p>')">
                 <h3>${link.name}</h3>
-                <p>${link.description}</p>
+                <p>${link.description.substring(0, 100)}...</p> <!-- عرض جزء من الوصف -->
             </div>
         `).join("");
 
@@ -173,3 +188,11 @@ async function fetchFooterData() {
         console.error("Error fetching footer data:", error);
     }
 }
+
+// إغلاق النافذة المنبثقة عند الضغط خارجها
+document.addEventListener("click", function (event) {
+    const popup = document.getElementById("popup");
+    if (event.target === popup) {
+        closePopup();
+    }
+});
