@@ -76,6 +76,9 @@
         .get-btn:hover {
             background: linear-gradient(135deg, #ff4b2b, #ff416c);
         }
+        .get-btn:active {
+            transform: scale(0.95);
+        }
         .no-results {
             display: none;
             color: red;
@@ -92,6 +95,10 @@
             max-width: 600px;
             border-radius: 10px;
             cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        #videoDetailsPage img:hover {
+            transform: scale(1.1);
         }
         #videoDetailsPage button {
             background: linear-gradient(135deg, #ff416c, #ff4b2b);
@@ -109,8 +116,8 @@
             height: 315px;
             border: none;
             border-radius: 10px;
-            margin-top: 20px;
-            display: none; /* إخفاء الفيديو في البداية */
+            margin: 20px auto;
+            display: none;
         }
 
         /* تنسيقات الفوتر */
@@ -136,7 +143,7 @@
             font-size: 18px;
             margin-bottom: 10px;
         }
-        .footer-card {
+        .footer-card, .social-card {
             background: #2a2a3b;
             border-radius: 10px;
             padding: 15px;
@@ -145,11 +152,11 @@
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
         }
-        .footer-card:hover {
+        .footer-card:hover, .social-card:hover {
             transform: scale(1.05);
             box-shadow: 0 6px 15px rgba(255, 0, 0, 0.8);
         }
-        .footer-card p {
+        .footer-card p, .social-card p {
             color: #fff;
             font-size: 14px;
             line-height: 1.5;
@@ -158,16 +165,6 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-        }
-        .social-link {
-            color: #ff4b2b;
-            text-decoration: none;
-            margin: 10px;
-            font-size: 16px;
-            transition: color 0.3s;
-        }
-        .social-link:hover {
-            color: #ff416c;
         }
 
         /* تنسيقات النافذة المنبثقة */
@@ -237,8 +234,8 @@
         <img id="videoThumbnail" src="" alt="Video Thumbnail" onclick="playVideo()" style="cursor: pointer;">
         <iframe id="videoPlayer" width="560" height="315" frameborder="0" allowfullscreen></iframe>
         <p id="videoDescription"></p>
-        <p id="developer"></p> <!-- Developer -->
-        <p id="description2"></p> <!-- description2 -->
+        <p id="developer"></p>
+        <p id="description2"></p>
         <h3>Links:</h3>
         <ul id="videoLinks"></ul>
         <button onclick="goBack()">Go Back</button>
