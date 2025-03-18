@@ -1,3 +1,4 @@
+// دالة لتحويل العلامات إلى تنسيقات HTML
 function formatText(text) {
     // تحويل **كلمة** إلى <strong>كلمة</strong>
     text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
