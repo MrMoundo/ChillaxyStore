@@ -20,6 +20,9 @@ function formatText(text) {
     // تحويل [النص](الرابط) إلى <a href="الرابط">النص</a>
     text = text.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" style="color: #ff4b2b; text-decoration: underline;">$1</a>');
 
+    // تحويل \n إلى <br> (سطر جديد)
+    text = text.replace(/\n/g, "<br>");
+
     return text;
 }
 
