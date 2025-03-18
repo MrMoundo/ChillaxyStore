@@ -1,7 +1,7 @@
 // دالة لتحويل العلامات إلى تنسيقات HTML
 function formatText(text) {
-    // تحويل **كلمة** إلى <strong>كلمة</strong>
-    text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    // تحويل **كلمة** إلى <strong style="font-size: 1.2em;">كلمة</strong>
+    text = text.replace(/\*\*(.*?)\*\*/g, "<strong style='font-size: 1.2em;'>$1</strong>");
 
     // تحويل `كلمة` إلى <code>كلمة</code>
     text = text.replace(/`(.*?)`/g, "<code>$1</code>");
@@ -104,9 +104,9 @@ function openVideoDetails(code) {
 
 // Go back to posts
 function goBack() {
-    document.getElementById("postsContainer").style.display = "block";
+    document.getElementById("postsContainer").style.display = "flex"; // تغيير إلى flex لإصلاح المحاذاة
     document.getElementById("videoDetailsPage").style.display = "none";
-    document.getElementById("postsContainer").style.textAlign = "center"; // إعادة المحاذاة إلى الوسط
+    document.getElementById("postsContainer").style.justifyContent = "center"; // إعادة المحاذاة إلى الوسط
     fetchPosts(); // Refresh posts
 }
 
