@@ -10,8 +10,18 @@ function formatText(text) {
     return text;
 }
 
+// دالة محسنة لاستخراج video-id من أي رابط يوتيوب
 function getYouTubeThumbnail(videoLink) {
-    const videoId = videoLink.split("v=")[1];
+    let videoId = '';
+    if (videoLink.includes("v=")) {
+        videoId = videoLink.split("v=")[1];
+        const ampersandPosition = videoId.indexOf("&");
+        if (ampersandPosition !== -1) {
+            videoId = videoId.substring(0, ampersandPosition);
+        }
+    } else if (videoLink.includes("youtu.be/")) {
+        videoId = videoLink.split("youtu.be/")[1];
+    }
     return `https://img.youtube.com/vi/${videoId}/0.jpg`;
 }
 
@@ -83,7 +93,7 @@ function openVideoDetails(code) {
             const linksList = document.getElementById("videoLinks");
             linksList.innerHTML = foundCode.links.map(link => `<li><a href="${link}" target="_blank" style="color: #ff4b2b; text-decoration: underline;">${link}</a></li>`).join("");
             const videoPlayer = document.getElementById("videoPlayer");
-            const videoId = foundCode.videoLink.split("v=")[1];
+            const videoId = getYouTubeThumbnail(foundCode.videoLink).split("/vi/")[1].split("/")[0];
             videoPlayer.src = `https://www.youtube.com/embed/${videoId}`;
             videoPlayer.style.display = "none";
             document.getElementById("postsContainer").style.display = "none";
