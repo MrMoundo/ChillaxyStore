@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles.css">
     <script defer src="script.js"></script>
     <style>
-        /* تنسيقات عامة */
         body {
             font-family: Arial, sans-serif;
             background-color: #1e1e2e;
@@ -119,8 +118,6 @@
             margin: 20px auto;
             display: none;
         }
-
-        /* تنسيقات الفوتر */
         footer {
             background: #1e1e2e;
             padding: 20px;
@@ -166,8 +163,6 @@
             justify-content: center;
             flex-wrap: wrap;
         }
-
-        /* تنسيقات النافذة المنبثقة */
         #popup {
             display: none;
             position: fixed;
@@ -199,8 +194,6 @@
             font-size: 16px;
             line-height: 1.5;
         }
-
-        /* Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -223,12 +216,10 @@
     </header>
     
     <section class="posts-container" id="postsContainer">
-        <!-- Posts will be loaded here dynamically -->
     </section>
     
     <p id="noResults" class="no-results">No results found.</p>
 
-    <!-- Video Details Page -->
     <div id="videoDetailsPage">
         <h2 id="videoTitle"></h2>
         <img id="videoThumbnail" src="" alt="Video Thumbnail" onclick="playVideo()" style="cursor: pointer;">
@@ -241,7 +232,6 @@
         <button onclick="goBack()">Go Back</button>
     </div>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -259,7 +249,6 @@
         </div>
     </footer>
 
-    <!-- النافذة المنبثقة -->
     <div id="popup">
         <div id="popupContent"></div>
     </div>
