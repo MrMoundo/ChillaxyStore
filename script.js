@@ -45,32 +45,9 @@ function goBack() {
     fetchPosts();
 }
 
-// دالة لعرض/إخفاء محتوى الفوتر
-function toggleFooterContent(contentType) {
-    // إخفاء كل محتويات الفوتر أولاً
-    const allContents = document.querySelectorAll('.footer-links-container');
-    allContents.forEach(content => {
-        content.style.display = 'none';
-    });
-    
-    // عرض المحتوى المطلوب
-    const contentToShow = document.getElementById(`${contentType}-content`);
-    if (contentToShow) {
-        if (contentToShow.style.display === 'block') {
-            contentToShow.style.display = 'none';
-        } else {
-            contentToShow.style.display = 'block';
-        }
-    }
-}
-
 document.addEventListener("DOMContentLoaded", function () {
     fetchPosts();
-    // إخفاء كل محتويات الفوتر عند التحميل
-    const allContents = document.querySelectorAll('.footer-links-container');
-    allContents.forEach(content => {
-        content.style.display = 'none';
-    });
+    fetchFooterData();
 });
 
 async function fetchPosts() {
@@ -154,6 +131,38 @@ function openPopup(content) {
 function closePopup() {
     const popup = document.getElementById("popup");
     popup.style.display = "none";
+}
+
+async function fetchFooterData() {
+    try {
+        const response = await fetch("data.json");
+        if (!response.ok) {
+            throw new Error("Failed to fetch data.json");
+        }
+        const data = await response.json();
+        const aboutLinks = document.getElementById("aboutLinks");
+        aboutLinks.innerHTML = data.about.map(link => `
+            <div class="footer-card" onclick="openPopup('<h3>${formatText(link.name)}</h3><p>${formatText(link.description)}</p>')">
+                <h3>${formatText(link.name)}</h3>
+                <p>${formatText(link.description)}</p>
+            </div>
+        `).join("");
+        const termsLinks = document.getElementById("termsLinks");
+        termsLinks.innerHTML = data.terms.map(link => `
+            <div class="footer-card" onclick="openPopup('<h3>${formatText(link.name)}</h3><p>${formatText(link.description)}</p>')">
+                <h3>${formatText(link.name)}</h3>
+                <p>${formatText(link.description)}</p>
+            </div>
+        `).join("");
+        const socialsLinks = document.getElementById("socialsLinks");
+        socialsLinks.innerHTML = data.socials.map(link => `
+            <div class="social-card" onclick="window.open('${link.link}', '_blank')">
+                <h3>${formatText(link.name)}</h3>
+            </div>
+        `).join("");
+    } catch (error) {
+        console.error("Error fetching footer data:", error);
+    }
 }
 
 document.addEventListener("click", function (event) {
