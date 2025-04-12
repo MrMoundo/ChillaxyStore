@@ -118,51 +118,98 @@
             margin: 20px auto;
             display: none;
         }
-        footer {
+        
+        /* Footer Button Styles */
+        .footer-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
+            background: #1e1e2e;
+        }
+        
+        .footer-btn {
+            background: #2a2a3b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-width: 120px;
+            text-align: center;
+            flex: 1;
+            max-width: 200px;
+        }
+        
+        .footer-btn:hover {
+            background: #3a3a4b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .footer-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Footer Content Styles */
+        .footer-content {
             background: #1e1e2e;
             padding: 20px;
             text-align: center;
             border-top: 1px solid #b00020;
-            margin-top: 40px;
         }
-        .footer-content {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-        }
-        .footer-section {
-            margin: 10px;
-            text-align: left;
-            max-width: 300px;
-        }
-        .footer-section h3 {
+        
+        .footer-content h3 {
             color: #ff4b2b;
-            font-size: 18px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
-        .footer-card, .social-card {
-            background: #2a2a3b;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-            box-shadow: 0 4px 10px rgba(255, 0, 0, 0.5);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-        .footer-card:hover, .social-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(255, 0, 0, 0.8);
-        }
-        .footer-card p, .social-card p {
+        
+        .footer-content p {
             color: #fff;
-            font-size: 14px;
-            line-height: 1.5;
+            line-height: 1.6;
         }
+        
+        /* Footer Links Container */
+        .footer-links-container {
+            display: none;
+            background: #2a2a3b;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 15px;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Social Links */
         .social-links {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
         }
+        
+        .social-card {
+            background: #2a2a3b;
+            border-radius: 5px;
+            padding: 15px;
+            min-width: 100px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .social-card:hover {
+            background: #3a3a4b;
+            transform: translateY(-3px);
+        }
+        
         #popup {
             display: none;
             position: fixed;
@@ -175,6 +222,7 @@
             align-items: center;
             z-index: 1000;
         }
+        
         #popupContent {
             background: #2a2a3b;
             padding: 20px;
@@ -184,16 +232,19 @@
             box-shadow: 0 4px 10px rgba(255, 0, 0, 0.5);
             animation: fadeInUp 0.5s ease-in-out;
         }
+        
         #popupContent h3 {
             color: #ff4b2b;
             font-size: 24px;
             margin-bottom: 15px;
         }
+        
         #popupContent p {
             color: #fff;
             font-size: 16px;
             line-height: 1.5;
         }
+        
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -232,22 +283,58 @@
         <button onclick="goBack()">Go Back</button>
     </div>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>About</h3>
-                <div id="aboutLinks"></div>
+    <div class="footer-buttons">
+        <button class="footer-btn" onclick="toggleFooterContent('about')">About Us</button>
+        <button class="footer-btn" onclick="toggleFooterContent('faq')">FAQ</button>
+        <button class="footer-btn" onclick="toggleFooterContent('careers')">Careers</button>
+        <button class="footer-btn" onclick="toggleFooterContent('privacyShield')">Privacy Shield</button>
+        <button class="footer-btn" onclick="toggleFooterContent('privacyPolicy')">Privacy Policy</button>
+        <button class="footer-btn" onclick="toggleFooterContent('terms')">Terms of Service</button>
+    </div>
+    
+    <div class="footer-content">
+        <div id="about-content" class="footer-links-container">
+            <h3>About Chillaxy Store</h3>
+            <p>Welcome to Chillaxy Store, your premier destination for the latest and greatest in digital content. Our mission is to provide high-quality resources to our community.</p>
+        </div>
+        
+        <div id="faq-content" class="footer-links-container">
+            <h3>Frequently Asked Questions</h3>
+            <p>Find answers to common questions about our services, products, and policies.</p>
+        </div>
+        
+        <div id="careers-content" class="footer-links-container">
+            <h3>Careers at Chillaxy</h3>
+            <p>Join our team and help us build amazing experiences for our users.</p>
+        </div>
+        
+        <div id="privacyShield-content" class="footer-links-container">
+            <h3>Privacy Shield</h3>
+            <p>We comply with international privacy standards to protect your data.</p>
+        </div>
+        
+        <div id="privacyPolicy-content" class="footer-links-container">
+            <h3>Privacy Policy</h3>
+            <p>Learn how we collect, use, and protect your personal information.</p>
+        </div>
+        
+        <div id="terms-content" class="footer-links-container">
+            <h3>Terms of Service</h3>
+            <p>Read the terms and conditions governing your use of our services.</p>
+        </div>
+        
+        <div class="social-links">
+            <div class="social-card" onclick="window.open('https://facebook.com/chillaxystore', '_blank')">
+                <h3>Facebook</h3>
             </div>
-            <div class="footer-section">
-                <h3>Terms</h3>
-                <div id="termsLinks"></div>
+            <div class="social-card" onclick="window.open('https://twitter.com/chillaxystore', '_blank')">
+                <h3>Twitter</h3>
             </div>
-            <div class="footer-section">
-                <h3>Socials</h3>
-                <div class="social-links" id="socialsLinks"></div>
+            <div class="social-card" onclick="window.open('https://instagram.com/chillaxystore', '_blank')">
+                <h3>Instagram</h3>
             </div>
         </div>
-    </footer>
+    </div>
 
     <div id="popup">
         <div id="popupContent"></div>
