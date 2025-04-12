@@ -40,5 +40,19 @@
         ],
         "thumbnail": "https://img.youtube.com/vi/E0c4LXelYaE/0.jpg",
         "used": false
+    },
+{
+        "code": "808",
+        "videoLink": "https://youtu.be/4ng9tEkiL1w",
+        "name": "كيف تسوي موقع بروفايل احترافي ليك 🤑🔥",
+        "description": "About Me Page",
+       "description2": "والله مكسل اشرح",
+        "developer": "Moundo",
+        "links": [
+            "https://frag.bio/",
+            "https://github.com/MrMoundo/Discord-Username-Checker"
+        ],
+        "thumbnail": "https://img.youtube.com/vi/E0c4LXelYaE/0.jpg",
+        "used": false
     }
 ]
