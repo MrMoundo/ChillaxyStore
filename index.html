@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <title>Chillaxy</title>
@@ -8,41 +8,58 @@
 </head>
 <body>
 
+<!-- ================= HEADER ================= -->
 <header class="topbar">
-  <div class="logo">CHILLAXY</div>
+  <div class="right">
+    <div class="logo">CHILLAXY</div>
+  </div>
+
   <nav>
-    <a href="#videos">Videos</a>
-    <a href="#about">About</a>
-    <a href="#terms">Terms</a>
-    <a href="#socials">Socials</a>
+    <a href="#">الرئيسية</a>
+    <a href="#">العروض</a>
+    <a href="#">التصنيفات</a>
   </nav>
 </header>
 
+<!-- ================= HERO SLIDER ================= -->
 <section class="hero">
-  <h1 class="glow">Chillaxy</h1>
-  <p>Premium videos & resources</p>
+  <div class="hero-track" id="banners">
+    <!-- banners from JS -->
+  </div>
+
+  <div class="hero-overlay">
+    <h1>ارتقِ بمستواك اليوم</h1>
+    <p>أفضل المحتوى الحصري والفيديوهات</p>
+    <button>ابدأ الآن</button>
+  </div>
 </section>
 
-<section class="banners">
-  <div class="banner-track" id="banners"></div>
+<!-- ================= VIDEOS / CATEGORIES ================= -->
+<section class="section">
+  <h2 class="section-title">الفيديوهات</h2>
+
+  <div id="videos" class="videos-grid">
+    <!-- videos -->
+  </div>
 </section>
 
-<section id="videos" class="videos"></section>
-
+<!-- ================= FOOTER ================= -->
 <footer>
-  <div id="about">
-    <h3>About</h3>
-    <p>Chillaxy is a curated platform for premium content.</p>
+  <div class="footer-col">
+    <h3>Chillaxy</h3>
+    <p>منصة محتوى احترافي.</p>
   </div>
-  <div id="terms">
-    <h3>Terms</h3>
-    <p>Use at your own responsibility.</p>
+
+  <div class="footer-col">
+    <h3>روابط</h3>
+    <a href="#">الرئيسية</a>
+    <a href="#">العروض</a>
+    <a href="#">تواصل معنا</a>
   </div>
-  <div id="socials">
-    <h3>Socials</h3>
-    <a href="#">Discord</a>
-    <a href="#">YouTube</a>
-    <a href="#">Twitter</a>
+
+  <div class="footer-col">
+    <h3>الدعم</h3>
+    <p>support@chillaxy.com</p>
   </div>
 </footer>
 
