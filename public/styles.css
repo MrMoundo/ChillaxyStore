@@ -1,0 +1,92 @@
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,Arial;
+  background:#0b0f1a;
+  color:#fff;
+}
+
+.hero{
+  min-height:90vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:
+    radial-gradient(circle at top,#ff000030,transparent),
+    #0b0f1a;
+}
+
+.hero h1{
+  font-size:3.5rem;
+  margin-bottom:10px;
+}
+
+.hero p{
+  opacity:.8;
+  margin-bottom:30px;
+}
+
+.btn{
+  padding:14px 28px;
+  background:#ff0000;
+  color:#fff;
+  border-radius:30px;
+  text-decoration:none;
+  transition:.3s;
+}
+.btn:hover{transform:scale(1.05)}
+
+.controls{
+  padding:20px;
+  text-align:center;
+}
+
+.controls input{
+  width:90%;
+  max-width:400px;
+  padding:12px;
+  border-radius:20px;
+  border:none;
+}
+
+.videos{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:20px;
+  padding:40px;
+}
+
+.card{
+  background:rgba(255,255,255,.03);
+  backdrop-filter:blur(10px);
+  border-radius:16px;
+  padding:16px;
+  transition:.3s;
+}
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 40px rgba(0,0,0,.4);
+}
+
+.card h3{
+  margin:10px 0;
+}
+
+.card p{
+  opacity:.7;
+  font-size:.9rem;
+}
+
+.card a{
+  display:inline-block;
+  margin-top:10px;
+  color:#ff0000;
+  text-decoration:none;
+}
+
+footer{
+  text-align:center;
+  padding:30px;
+  opacity:.5;
+}
