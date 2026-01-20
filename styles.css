@@ -1,4 +1,8 @@
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+  scroll-behavior:smooth;
+}
+
 body{
   margin:0;
   font-family:Inter,Arial;
@@ -6,75 +10,170 @@ body{
   color:#fff;
 }
 
+/* ================= TOP BAR ================= */
+
 .topbar{
+  position:sticky;
+  top:0;
+  z-index:100;
   display:flex;
   justify-content:space-between;
+  align-items:center;
   padding:16px 30px;
   background:#121214;
+  border-bottom:1px solid #1f1f22;
 }
+
 .logo{
   font-weight:900;
   letter-spacing:2px;
+  font-size:20px;
 }
+
 nav a{
   color:#aaa;
   margin-left:16px;
   text-decoration:none;
+  font-size:14px;
+  transition:.3s;
 }
-nav a:hover{color:#b24cff}
+
+nav a:hover{
+  color:#b24cff;
+}
+
+/* ================= HERO ================= */
 
 .hero{
   text-align:center;
-  padding:80px 20px;
+  padding:90px 20px 60px;
 }
+
 .glow{
   font-size:64px;
+  margin:0;
   background:linear-gradient(90deg,#a855f7,#ec4899);
   -webkit-background-clip:text;
   color:transparent;
   animation:glow 2s infinite alternate;
 }
+
+.hero p{
+  color:#aaa;
+  margin-top:10px;
+}
+
 @keyframes glow{
   from{filter:drop-shadow(0 0 10px #a855f7)}
   to{filter:drop-shadow(0 0 25px #ec4899)}
 }
 
+/* ================= BANNERS SLIDER ================= */
+
 .banners{
   overflow:hidden;
-  padding:20px;
+  padding:20px 0 40px;
+  position:relative;
 }
+
 .banner-track{
   display:flex;
-  gap:20px;
+  gap:24px;
+  padding-left:20px;
+  transition:transform .7s ease-in-out;
+  will-change:transform;
 }
+
 .banner-track img{
-  width:100%;
-  max-width:420px;
-  border-radius:16px;
+  width:420px;
+  height:220px;
+  object-fit:cover;
+  border-radius:18px;
+  flex-shrink:0;
+  background:#18181b;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);
+  transition:.4s;
 }
+
+.banner-track img:hover{
+  transform:scale(1.04);
+  box-shadow:0 15px 40px rgba(168,85,247,.35);
+}
+
+/* ================= VIDEOS ================= */
 
 .videos{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:20px;
-  padding:40px;
+  gap:24px;
+  padding:40px 30px 60px;
 }
+
 .card{
   background:#18181b;
-  border-radius:16px;
-  padding:16px;
-  transition:.3s;
+  border-radius:18px;
+  padding:18px;
+  transition:.35s;
+  border:1px solid #1f1f22;
 }
+
+.card h3{
+  margin-top:0;
+}
+
+.card p{
+  color:#aaa;
+  font-size:14px;
+}
+
+.card a{
+  display:inline-block;
+  margin-top:10px;
+  color:#b24cff;
+  text-decoration:none;
+  font-weight:600;
+}
+
 .card:hover{
-  transform:translateY(-6px);
+  transform:translateY(-8px);
+  box-shadow:0 15px 40px rgba(0,0,0,.6);
 }
+
+/* ================= FOOTER ================= */
 
 footer{
   background:#121214;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  padding:40px;
-  gap:20px;
+  padding:50px 30px;
+  gap:30px;
   color:#aaa;
+  border-top:1px solid #1f1f22;
 }
-footer h3{color:#fff}
+
+footer h3{
+  color:#fff;
+  margin-top:0;
+}
+
+footer a{
+  color:#aaa;
+  text-decoration:none;
+  display:block;
+  margin-top:6px;
+  transition:.3s;
+}
+
+footer a:hover{
+  color:#b24cff;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width:768px){
+  .glow{font-size:44px}
+  .banner-track img{
+    width:300px;
+    height:170px;
+  }
+}
