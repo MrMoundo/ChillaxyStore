@@ -1,3 +1,5 @@
+const API_URL = "https://chillaxy.up.railway.app/api/videos";
+
 function formatText(text) {
     if (!text) return '';
     text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
@@ -5,20 +7,18 @@ function formatText(text) {
     text = text.replace(/__(.*?)__/g, "<u>$1</u>");
     text = text.replace(/~~(.*?)~~/g, "<del>$1</del>");
     text = text.replace(/\*(.*?)\*/g, "<em>$1</em>");
-    text = text.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" style="color: #ff4b2b; text-decoration: underline;">$1</a>');
+    text = text.replace(/\[(.*?)\]\((.*?)\)/g,
+        '<a href="$2" target="_blank" style="color:#00ffd5;text-decoration:underline;">$1</a>'
+    );
     text = text.replace(/\n/g, "<br>");
     return text;
 }
 
-// دالة محسنة لاستخراج video-id من أي رابط يوتيوب
+// استخراج Thumbnail من يوتيوب
 function getYouTubeThumbnail(videoLink) {
-    let videoId = '';
+    let videoId = "";
     if (videoLink.includes("v=")) {
-        videoId = videoLink.split("v=")[1];
-        const ampersandPosition = videoId.indexOf("&");
-        if (ampersandPosition !== -1) {
-            videoId = videoId.substring(0, ampersandPosition);
-        }
+        videoId = videoLink.split("v=")[1].split("&")[0];
     } else if (videoLink.includes("youtu.be/")) {
         videoId = videoLink.split("youtu.be/")[1];
     }
@@ -26,148 +26,166 @@ function getYouTubeThumbnail(videoLink) {
 }
 
 function playVideo() {
-    const videoThumbnail = document.getElementById("videoThumbnail");
-    const videoPlayer = document.getElementById("videoPlayer");
-    videoThumbnail.style.display = "none";
-    videoPlayer.style.display = "block";
-    videoPlayer.src += "?autoplay=1";
+    const thumb = document.getElementById("videoThumbnail");
+    const player = document.getElementById("videoPlayer");
+    thumb.style.display = "none";
+    player.style.display = "block";
+    player.src += "?autoplay=1";
 }
 
 function goBack() {
-    const videoThumbnail = document.getElementById("videoThumbnail");
-    const videoPlayer = document.getElementById("videoPlayer");
-    videoPlayer.style.display = "none";
-    videoThumbnail.style.display = "block";
-    videoPlayer.src = videoPlayer.src.split("?")[0];
-    document.getElementById("postsContainer").style.display = "flex";
+    const thumb = document.getElementById("videoThumbnail");
+    const player = document.getElementById("videoPlayer");
+
+    player.style.display = "none";
+    thumb.style.display = "block";
+    player.src = player.src.split("?")[0];
+
     document.getElementById("videoDetailsPage").style.display = "none";
-    document.getElementById("postsContainer").style.justifyContent = "center";
+    document.getElementById("postsContainer").style.display = "flex";
+
     fetchPosts();
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     fetchPosts();
     fetchFooterData();
 });
 
 async function fetchPosts() {
     try {
-        const response = await fetch("Files/Codes.json");
-        if (!response.ok) {
-            throw new Error("Failed to fetch posts");
+        const res = await fetch(API_URL);
+        const codes = await res.json();
+
+        const container = document.getElementById("postsContainer");
+        container.innerHTML = "";
+
+        if (!codes.length) {
+            document.getElementById("noResults").style.display = "block";
+            return;
         }
-        const codes = await response.json();
-        const postsContainer = document.getElementById("postsContainer");
-        postsContainer.innerHTML = "";
+
+        document.getElementById("noResults").style.display = "none";
+
         codes.forEach(code => {
-            const thumbnail = getYouTubeThumbnail(code.videoLink);
             const post = document.createElement("div");
             post.className = "post";
+            post.dataset.search =
+                `${code.name} ${code.description} ${code.developer}`.toLowerCase();
+
             post.innerHTML = `
-                <img src="${thumbnail}" alt="Post Image" style="width:100%; border-radius: 10px;">
+                <img src="${getYouTubeThumbnail(code.videoLink)}"
+                     style="width:100%;border-radius:10px;">
                 <h3>${formatText(code.name)}</h3>
                 <p>${formatText(code.description)}</p>
-                <button class="get-btn" onclick="openVideoDetails('${code.code}')">🔽 Get</button>
+                <button class="get-btn" onclick="openVideoDetails('${code.code}')">
+                    ▶️ Watch
+                </button>
             `;
-            postsContainer.appendChild(post);
+            container.appendChild(post);
         });
-    } catch (error) {
-        console.error("Error fetching posts:", error);
+
+    } catch (err) {
+        console.error(err);
         document.getElementById("noResults").style.display = "block";
     }
 }
 
-function openVideoDetails(code) {
-    fetch("Files/Codes.json")
-        .then(response => response.json())
+function openVideoDetails(codeId) {
+    fetch(API_URL)
+        .then(res => res.json())
         .then(codes => {
-            const foundCode = codes.find(c => c.code === code);
-            if (!foundCode) {
-                throw new Error("Code not found");
-            }
-            document.getElementById("videoTitle").innerHTML = formatText(foundCode.name);
-            document.getElementById("videoThumbnail").src = getYouTubeThumbnail(foundCode.videoLink);
-            document.getElementById("videoDescription").innerHTML = formatText(foundCode.description);
-            document.getElementById("developer").innerHTML = formatText(`Developer: ${foundCode.developer}`);
-            document.getElementById("description2").innerHTML = formatText(foundCode.description2);
+            const video = codes.find(v => v.code === codeId);
+            if (!video) return;
+
+            document.getElementById("videoTitle").innerHTML = formatText(video.name);
+            document.getElementById("videoDescription").innerHTML = formatText(video.description);
+            document.getElementById("developer").innerHTML =
+                formatText(`Developer: ${video.developer || "Chillaxy"}`);
+            document.getElementById("description2").innerHTML =
+                formatText(video.description2 || "");
+
+            const thumb = document.getElementById("videoThumbnail");
+            const player = document.getElementById("videoPlayer");
+
+            const videoId = getYouTubeThumbnail(video.videoLink)
+                .split("/vi/")[1].split("/")[0];
+
+            thumb.src = getYouTubeThumbnail(video.videoLink);
+            player.src = `https://www.youtube.com/embed/${videoId}`;
+            player.style.display = "none";
+            thumb.style.display = "block";
+
+            // Links (لو موجودة بس)
             const linksList = document.getElementById("videoLinks");
-            linksList.innerHTML = foundCode.links.map(link => `<li><a href="${link}" target="_blank" style="color: #ff4b2b; text-decoration: underline;">${link}</a></li>`).join("");
-            const videoPlayer = document.getElementById("videoPlayer");
-            const videoId = getYouTubeThumbnail(foundCode.videoLink).split("/vi/")[1].split("/")[0];
-            videoPlayer.src = `https://www.youtube.com/embed/${videoId}`;
-            videoPlayer.style.display = "none";
+            if (video.links && video.links.length > 0) {
+                linksList.innerHTML = video.links
+                    .map(l => `<li><a href="${l}" target="_blank">${l}</a></li>`)
+                    .join("");
+                linksList.style.display = "block";
+            } else {
+                linksList.style.display = "none";
+            }
+
             document.getElementById("postsContainer").style.display = "none";
             document.getElementById("videoDetailsPage").style.display = "block";
-        })
-        .catch(error => {
-            console.error("Error fetching video details:", error);
-            alert("Failed to load video details!");
         });
 }
 
 function searchPosts() {
-    let input = document.getElementById("searchInput").value.toLowerCase();
-    let posts = document.querySelectorAll(".post");
-    let noResults = document.getElementById("noResults");
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const posts = document.querySelectorAll(".post");
     let found = false;
-    posts.forEach(post => {
-        if (post.innerText.toLowerCase().includes(input)) {
-            post.style.display = "block";
+
+    posts.forEach(p => {
+        if (p.dataset.search.includes(input)) {
+            p.style.display = "block";
             found = true;
         } else {
-            post.style.display = "none";
+            p.style.display = "none";
         }
     });
-    noResults.style.display = found ? "none" : "block";
+
+    document.getElementById("noResults").style.display = found ? "none" : "block";
+}
+
+// Footer
+async function fetchFooterData() {
+    const res = await fetch("data.json");
+    const data = await res.json();
+
+    document.getElementById("aboutLinks").innerHTML =
+        data.about.map(a => `
+        <div class="footer-card" onclick="openPopup('<h3>${a.name}</h3><p>${formatText(a.description)}</p>')">
+            <h3>${a.name}</h3>
+            <p>${formatText(a.description)}</p>
+        </div>
+    `).join("");
+
+    document.getElementById("termsLinks").innerHTML =
+        data.terms.map(t => `
+        <div class="footer-card" onclick="openPopup('<h3>${t.name}</h3><p>${formatText(t.description)}</p>')">
+            <h3>${t.name}</h3>
+            <p>${formatText(t.description)}</p>
+        </div>
+    `).join("");
+
+    document.getElementById("socialsLinks").innerHTML =
+        data.socials.map(s => `
+        <div class="social-card" onclick="window.open('${s.link}','_blank')">
+            <h3>${s.name}</h3>
+        </div>
+    `).join("");
 }
 
 function openPopup(content) {
     const popup = document.getElementById("popup");
-    const popupContent = document.getElementById("popupContent");
-    popupContent.innerHTML = content;
+    document.getElementById("popupContent").innerHTML = content;
     popup.style.display = "flex";
 }
 
-function closePopup() {
-    const popup = document.getElementById("popup");
-    popup.style.display = "none";
-}
-
-async function fetchFooterData() {
-    try {
-        const response = await fetch("data.json");
-        if (!response.ok) {
-            throw new Error("Failed to fetch data.json");
-        }
-        const data = await response.json();
-        const aboutLinks = document.getElementById("aboutLinks");
-        aboutLinks.innerHTML = data.about.map(link => `
-            <div class="footer-card" onclick="openPopup('<h3>${formatText(link.name)}</h3><p>${formatText(link.description)}</p>')">
-                <h3>${formatText(link.name)}</h3>
-                <p>${formatText(link.description)}</p>
-            </div>
-        `).join("");
-        const termsLinks = document.getElementById("termsLinks");
-        termsLinks.innerHTML = data.terms.map(link => `
-            <div class="footer-card" onclick="openPopup('<h3>${formatText(link.name)}</h3><p>${formatText(link.description)}</p>')">
-                <h3>${formatText(link.name)}</h3>
-                <p>${formatText(link.description)}</p>
-            </div>
-        `).join("");
-        const socialsLinks = document.getElementById("socialsLinks");
-        socialsLinks.innerHTML = data.socials.map(link => `
-            <div class="social-card" onclick="window.open('${link.link}', '_blank')">
-                <h3>${formatText(link.name)}</h3>
-            </div>
-        `).join("");
-    } catch (error) {
-        console.error("Error fetching footer data:", error);
-    }
-}
-
-document.addEventListener("click", function (event) {
-    const popup = document.getElementById("popup");
-    if (event.target === popup) {
-        closePopup();
+document.addEventListener("click", e => {
+    if (e.target.id === "popup") {
+        document.getElementById("popup").style.display = "none";
     }
 });
