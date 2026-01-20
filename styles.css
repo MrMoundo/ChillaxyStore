@@ -1,16 +1,15 @@
 *{
   box-sizing:border-box;
-  scroll-behavior:smooth;
+  font-family:Inter,Arial;
 }
 
 body{
   margin:0;
-  font-family:Inter,Arial;
-  background:#0d0d0f;
+  background:#0e0e10;
   color:#fff;
 }
 
-/* ================= TOP BAR ================= */
+/* ================= TOPBAR ================= */
 
 .topbar{
   position:sticky;
@@ -19,106 +18,108 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:16px 30px;
-  background:#121214;
-  border-bottom:1px solid #1f1f22;
+  padding:18px 40px;
+  background:#141416;
 }
 
 .logo{
   font-weight:900;
-  letter-spacing:2px;
-  font-size:20px;
+  font-size:22px;
 }
 
 nav a{
-  color:#aaa;
-  margin-left:16px;
+  color:#ccc;
+  margin:0 12px;
   text-decoration:none;
   font-size:14px;
-  transition:.3s;
 }
 
 nav a:hover{
-  color:#b24cff;
+  color:#a855f7;
 }
 
 /* ================= HERO ================= */
 
 .hero{
-  text-align:center;
-  padding:90px 20px 60px;
-}
-
-.glow{
-  font-size:64px;
-  margin:0;
-  background:linear-gradient(90deg,#a855f7,#ec4899);
-  -webkit-background-clip:text;
-  color:transparent;
-  animation:glow 2s infinite alternate;
-}
-
-.hero p{
-  color:#aaa;
-  margin-top:10px;
-}
-
-@keyframes glow{
-  from{filter:drop-shadow(0 0 10px #a855f7)}
-  to{filter:drop-shadow(0 0 25px #ec4899)}
-}
-
-/* ================= BANNERS SLIDER ================= */
-
-.banners{
-  overflow:hidden;
-  padding:20px 0 40px;
   position:relative;
+  height:420px;
+  overflow:hidden;
 }
 
-.banner-track{
+.hero-track{
   display:flex;
-  gap:24px;
-  padding-left:20px;
-  transition:transform .7s ease-in-out;
-  will-change:transform;
+  height:100%;
+  transition:transform .8s ease;
 }
 
-.banner-track img{
-  width:420px;
-  height:220px;
+.hero-track img{
+  width:100vw;
+  height:420px;
   object-fit:cover;
-  border-radius:18px;
-  flex-shrink:0;
-  background:#18181b;
-  box-shadow:0 10px 30px rgba(0,0,0,.6);
-  transition:.4s;
 }
 
-.banner-track img:hover{
-  transform:scale(1.04);
-  box-shadow:0 15px 40px rgba(168,85,247,.35);
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to left,rgba(0,0,0,.7),rgba(0,0,0,.2));
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:0 60px;
+}
+
+.hero-overlay h1{
+  font-size:42px;
+  margin:0;
+}
+
+.hero-overlay p{
+  margin:10px 0 20px;
+  color:#ddd;
+}
+
+.hero-overlay button{
+  width:140px;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#7c3aed;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* ================= SECTION ================= */
+
+.section{
+  padding:60px 40px;
+}
+
+.section-title{
+  font-size:26px;
+  margin-bottom:30px;
 }
 
 /* ================= VIDEOS ================= */
 
-.videos{
+.videos-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
   gap:24px;
-  padding:40px 30px 60px;
 }
 
 .card{
-  background:#18181b;
+  background:#1a1a1d;
   border-radius:18px;
-  padding:18px;
-  transition:.35s;
-  border:1px solid #1f1f22;
+  padding:16px;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-6px);
 }
 
 .card h3{
-  margin-top:0;
+  margin:0;
 }
 
 .card p{
@@ -129,51 +130,39 @@ nav a:hover{
 .card a{
   display:inline-block;
   margin-top:10px;
-  color:#b24cff;
+  color:#a855f7;
   text-decoration:none;
-  font-weight:600;
-}
-
-.card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 15px 40px rgba(0,0,0,.6);
 }
 
 /* ================= FOOTER ================= */
 
 footer{
-  background:#121214;
+  background:#141416;
+  padding:50px 40px;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  padding:50px 30px;
   gap:30px;
-  color:#aaa;
-  border-top:1px solid #1f1f22;
 }
 
 footer h3{
-  color:#fff;
   margin-top:0;
 }
 
 footer a{
+  display:block;
   color:#aaa;
   text-decoration:none;
-  display:block;
   margin-top:6px;
-  transition:.3s;
 }
 
 footer a:hover{
-  color:#b24cff;
+  color:#a855f7;
 }
 
-/* ================= RESPONSIVE ================= */
+/* ================= MOBILE ================= */
 
-@media (max-width:768px){
-  .glow{font-size:44px}
-  .banner-track img{
-    width:300px;
-    height:170px;
-  }
+@media(max-width:768px){
+  .hero-overlay h1{font-size:28px}
+  .hero{height:300px}
+  .hero-track img{height:300px}
 }
