@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>Chillaxy</title>
@@ -8,58 +8,73 @@
 </head>
 <body>
 
-<!-- ================= HEADER ================= -->
-<header class="topbar">
-  <div class="right">
-    <div class="logo">CHILLAXY</div>
+<!-- ================= INTRO ================= -->
+<div id="intro">
+  <div class="intro-inner">
+    <div class="intro-logo">CHILLAXY</div>
+    <div class="intro-bar"></div>
   </div>
+</div>
 
-  <nav>
-    <a href="#">الرئيسية</a>
-    <a href="#">العروض</a>
-    <a href="#">التصنيفات</a>
-  </nav>
+<!-- ================= TOP BAR ================= -->
+<header class="topbar">
+  <div class="brand">Chillaxy</div>
+
+  <input 
+    id="search" 
+    type="text" 
+    placeholder="Search videos..."
+    autocomplete="off"
+  />
+
+  <div class="auth">
+    <a href="/auth/login" class="login-btn">Login with Discord</a>
+  </div>
 </header>
 
-<!-- ================= HERO SLIDER ================= -->
+<!-- ================= HERO ================= -->
 <section class="hero">
-  <div class="hero-track" id="banners">
-    <!-- banners from JS -->
-  </div>
+  <div class="hero-track" id="banners"></div>
 
   <div class="hero-overlay">
-    <h1>ارتقِ بمستواك اليوم</h1>
-    <p>أفضل المحتوى الحصري والفيديوهات</p>
-    <button>ابدأ الآن</button>
+    <h1>Upgrade Your Experience</h1>
+    <p>Premium gaming & video content curated for you</p>
   </div>
 </section>
 
-<!-- ================= VIDEOS / CATEGORIES ================= -->
-<section class="section">
-  <h2 class="section-title">الفيديوهات</h2>
+<!-- ================= VIDEOS ================= -->
+<section class="videos-section">
+  <h2>All Videos</h2>
 
-  <div id="videos" class="videos-grid">
-    <!-- videos -->
+  <div id="videos" class="videos-grid"></div>
+  <div id="no-results" class="no-results hidden">
+    No results found
   </div>
 </section>
 
 <!-- ================= FOOTER ================= -->
 <footer>
   <div class="footer-col">
-    <h3>Chillaxy</h3>
-    <p>منصة محتوى احترافي.</p>
+    <h3>About Chillaxy</h3>
+    <p>
+      Chillaxy is a premium community-driven platform focused on
+      gaming, videos, and a smooth digital experience.
+    </p>
   </div>
 
   <div class="footer-col">
-    <h3>روابط</h3>
-    <a href="#">الرئيسية</a>
-    <a href="#">العروض</a>
-    <a href="#">تواصل معنا</a>
+    <h3>Socials</h3>
+    <a href="https://discord.gg/TVPmfTdKQ9" target="_blank">Discord</a>
+    <a href="https://www.youtube.com/@Mr-Moundo" target="_blank">YouTube</a>
+    <a href="#">TikTok</a>
+    <a href="#">Instagram</a>
+    <a href="#">Facebook</a>
   </div>
 
   <div class="footer-col">
-    <h3>الدعم</h3>
-    <p>support@chillaxy.com</p>
+    <h3>Legal</h3>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
   </div>
 </footer>
 
